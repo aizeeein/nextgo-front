@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import CreateUserForm from "./create-user";
 import UserCard from "@/components/user-card";
 
+import { Button } from "@/components/ui/button";
+import CreateUserDialog from "@/components/create-dialog";
+
 interface User {
   id: string;
   name: string;
@@ -49,6 +52,7 @@ export default function UsersPage() {
 
   return (
     <div className="p-4 flex flex-col space-y-4">
+      <CreateUserDialog />
       <div className="border-2 p-2 flex items-center justify-center">
         <CreateUserForm user={editingUser} onSuccess={handleFormSuccess} />
       </div>

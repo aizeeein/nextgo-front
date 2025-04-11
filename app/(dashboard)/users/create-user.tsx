@@ -96,7 +96,7 @@ export default function CreateUserForm({
           required
         />
         <Button type="submit" className="ml-2">
-          Create
+          Submit
         </Button>
       </form>
       {message && <p>{message}</p>}
