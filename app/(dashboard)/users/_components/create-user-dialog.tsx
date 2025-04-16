@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "./ui/button";
+import { Button } from "../../../../components/ui/button";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -23,11 +23,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+} from "../../../../components/ui/form";
+import { Input } from "../../../../components/ui/input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import CreateUser from "@/actions/createStaff";
+import CreateUser from "@/actions/createUser";
+import { User } from "@/types/user";
 
 const createUserSchema = z.object({
   name: z.string().min(2),
@@ -37,7 +38,7 @@ const createUserSchema = z.object({
 
 type createUserSchemaType = z.infer<typeof createUserSchema>;
 
-function CreateUserDialog() {
+function CreateUserDialog({onUserCreated} : {onUserCreated: (user: User) => void}) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<createUserSchemaType>({
@@ -51,8 +52,10 @@ function CreateUserDialog() {
 
   const mutation = useMutation({
     mutationFn: CreateUser,
-    onSuccess: () => {
+    onSuccess: (newUser) => {
       toast.success("user added", { id: "create-user" });
+      console.log("New user created:", newUser)
+      onUserCreated(newUser)
     },
     onError: () => {
       toast.error("Failed to add user", { id: "create-user" });
@@ -126,7 +129,11 @@ function CreateUserDialog() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input placeholder="Password" {...field} />
+                        <Input
+                          type="password"
+                          placeholder="Password"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

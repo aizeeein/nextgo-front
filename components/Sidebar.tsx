@@ -65,7 +65,7 @@ export function MobileSidebar() {
 
   const activeRoute =
     routes.find(
-      (route) => route.href.length > 0 && pathName.startsWith(route.href)
+      (route) => route.href.length > 0 && pathName.includes(route.href)
     ) || routes[0];
 
   return (

@@ -132,13 +132,50 @@
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .feature-card {
+    @apply rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .shine-effect {
+    position: relative;
+  }
+
+  .shine-effect::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .shine-effect:hover::after {
+    animation: background-shine 1s linear infinite;
+    opacity: 1;
+  }
+
+  @keyframes background-shine {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 }

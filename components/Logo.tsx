@@ -18,13 +18,19 @@ function Logo({
       href="/"
       className={cn("text-2xl font-extrabold flex items-center", fontSize)}
     >
-      <Image src={alii} alt="logo" className="size-12 bg-transparent" />
+      <Image
+        src={"KOMIDA-02.svg"}
+        width={20}
+        height={20}
+        alt="logo"
+        className="size-12 bg-transparent"
+      />
 
       <div>
         <span className="bg-gradient-to-r from-emerald-500 to bg-emerald-600 bg-clip-text text-transparent">
-          Ali
+          KOMIDA
         </span>
-        <span className="text-stone-700 dark:text-stone-300">TaskManager</span>
+        <span className="text-stone-700 dark:text-stone-300">Task</span>
       </div>
     </Link>
   );

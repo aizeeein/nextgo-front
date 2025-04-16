@@ -7,6 +7,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  password: string
 }
 
 interface CreateUserFormProps {
@@ -26,7 +27,7 @@ export default function CreateUserForm({
 
   useEffect(() => {
     if (user) {
-      setForm({ name: user.name, email: user.email, password: "" });
+      setForm({ name: user.name, email: user.email, password: user.password });
     } else {
       setForm({ name: "", email: "", password: "" });
     }

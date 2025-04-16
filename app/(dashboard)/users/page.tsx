@@ -1,71 +1,18 @@
-"use client";
+// app/(dashboard)/users/page.tsx
+import GetUsers from "@/actions/getUsers";
 
-import { useEffect, useState } from "react";
-import CreateUserForm from "./create-user";
-import UserCard from "@/components/user-card";
+import { User } from "@/types/user";
+import UserGrid from "./_components/user-grid";
+import CreateUserDialog from "./_components/create-user-dialog";
 
-import { Button } from "@/components/ui/button";
-import CreateUserDialog from "@/components/create-dialog";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
-
-  const fetchUsers = async () => {
-    const res = await fetch("http://localhost:8080/users");
-
-    if (res.ok) {
-      const data = await res.json();
-      setUsers(data);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, [users]);
-
-  const handleEdit = (user: User) => {
-    setEditingUser(user);
-  };
-
-  const handleDelete = async (id: string) => {
-    const res = await fetch(`http://localhost:8080/users/${id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
-      setUsers(users.filter((user) => user.id != user.id));
-    } else {
-      alert("Failed to delete user");
-    }
-  };
-
-  const handleFormSuccess = () => {
-    fetchUsers();
-    setEditingUser(null);
-  };
+export default async function UsersPage() {
+  const users = await GetUsers();
 
   return (
-    <div className="p-4 flex flex-col space-y-4">
-      <CreateUserDialog />
-      <div className="border-2 p-2 flex items-center justify-center">
-        <CreateUserForm user={editingUser} onSuccess={handleFormSuccess} />
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex justify-end">        
       </div>
-      {users.map((user, index) => (
-        <div key={user.id}>
-          <UserCard
-            user={user}
-            index={index}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-          />
-        </div>
-      ))}
+      <UserGrid initialUsers={users} />
     </div>
   );
 }
